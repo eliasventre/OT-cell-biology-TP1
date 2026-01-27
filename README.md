@@ -38,10 +38,14 @@ If you encounter installation issues locally, you can run the TP on Google Colab
 
 ### Option 2 — Conda
 
+```
 conda env create -f environment.yml
 conda activate ot-cell-biology
 jupyter notebook
+````
 
 ### Option 3
 
+```
 pip install -r requirements.txt
+```
