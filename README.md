@@ -26,9 +26,13 @@ If you encounter installation issues locally, you can run the TP on Google Colab
 2. Create a **New Notebook**
 3. In the **first cell of the notebook**, copy and run the following commands:
 
-!git clone https://github.com/TON_USERNAME/OT-cell-biology-TP1.git
+```
+!git clone https://github.com/eliasventre/OT-cell-biology-TP1.git
+
 %cd OT-cell-biology-TP1
+
 !pip install -r requirements.txt
+```
 
 4. hen open the notebooks in the notebooks/ folder.
 
