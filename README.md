@@ -16,5 +16,24 @@ Trajectory inference from single-cell data using **entropic optimal transport**.
 Python ≥ 3.9  
 Main libraries: numpy, scipy, matplotlib, POT, pytorch
 
-## How to start
-Clone the repository and open the notebooks in order.
+## Installation
+
+### Option 1 — Google Colab (recommended)
+
+If you encounter installation issues locally, you can run the TP on Google Colab.
+
+```python
+!git clone https://github.com/eliasventre/OT-cell-biology-TP1.git
+%cd OT-cell-biology-TP1
+!pip install -r requirements.txt```
+
+
+### Option 2 — Conda
+
+conda env create -f environment.yml
+conda activate ot-cell-biology
+jupyter notebook
+
+### Option 3
+
+pip install -r requirements.txt

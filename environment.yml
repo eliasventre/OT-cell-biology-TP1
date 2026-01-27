@@ -1,0 +1,14 @@
+name: ot-cell-biology
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy>=1.23
+  - scipy>=1.9
+  - matplotlib>=3.6
+  - jupyter
+  - tqdm
+  - pip
+  - pip:
+      - pot
+      - geomloss
