@@ -46,7 +46,7 @@ def compute_ot_coupling(X_source, X_target, epsilon):
     return np.ones((X_source.shape[0], X_target.shape[0]))
 
 
-def build_trajectories(snapshots_dict, couplings, n_trajectories=100, seed=42):
+def build_trajectories(snapshots_dict, couplings, n_trajectories=100):
     """
     Construit des trajectoires en chaînant les couplages OT.
     
@@ -64,24 +64,9 @@ def build_trajectories(snapshots_dict, couplings, n_trajectories=100, seed=42):
     trajectories : list of list of ndarray
         Liste de trajectoires, chaque trajectoire est une liste de positions
     """
-    rng = np.random.default_rng(seed)
     times = sorted(snapshots_dict.keys())
-    
-    # Indices de départ aléatoires
-    n_particles_start = len(snapshots_dict[times[0]])
-    start_indices = rng.choice(n_particles_start, size=n_trajectories, replace=True)
-    
-    trajectories = []
-    
-    for start_idx in start_indices:
-        trajectory = []
+    trajectories = [[snapshots_dict[times[i]][n] for i in range(0, len(times))] for n in range(0, n_trajectories)]
 
-        for k in range(len(times)):
-            t_current = times[k]
-            trajectory.append(snapshots_dict[t_current][0])
-        
-        trajectories.append(trajectory)
-    
     return trajectories, times
 
 

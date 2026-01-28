@@ -2,7 +2,7 @@ import numpy as np
 
 
 
-def grad_potential_complex(x, t, well_separation=2.5, speed=7):
+def grad_potential(x, t, well_separation=2.5, speed=7):
     """
     Gradient of a time-dependent potential with complex branching dynamics.
     Version corrigée avec transitions continues.
@@ -114,44 +114,6 @@ def grad_potential_complex(x, t, well_separation=2.5, speed=7):
     return grad_V
 
 
-def grad_potential_simple(x, t, well=2, speed=7):
-    """
-    Gradient of the potential defining the drift.
-
-    Parameters
-    ----------
-    x : array-like, shape (d,)
-        Particle position.
-    t : float
-        Time.
-
-    Returns
-    -------
-    grad_V : ndarray, shape (d,)
-        Gradient of the potential at (x, t).
-    """
-    x = np.asarray(x)
-    dim = x.size
-
-    x0 = np.array([well] + [0.] * (dim - 1))
-    x1 = -x0
-
-    grad_V = np.zeros(dim)
-
-    for i in range(0, dim):
-        if i == 0:
-            grad_V[i] += (t**2 + .1) * (
-                (x - x0)[0] * (x - x1)[0] ** 2
-                + (x - x0)[0] ** 2 * (x - x1)[0]
-            )
-        elif i == 1:
-            grad_V[i] += speed * t
-        else:
-            grad_V[i] += speed * x[i]
-
-    return grad_V
-
-
 def simulate_sde(
     n_particles=1000,
     dim=2,
@@ -201,22 +163,23 @@ def simulate_sde(
     times = np.linspace(t0, t1, n_steps + 1)
 
     # Initial condition: centered Gaussian
-    X = rng.normal(0.0, 0.5, size=(n_particles, dim))
 
-    snapshot_idx = 0
+    for snapshot_idx, time in enumerate(snapshot_times):
+        print(time)
+        t = t0
+        X = rng.normal(0.0, 0.5, size=(n_particles, dim))
+        while t <= time:
+            if np.isclose(t, snapshot_times[snapshot_idx], atol=dt):
+                snapshots[snapshot_times[snapshot_idx]] = X.copy()
+                snapshot_idx += 1
 
-    for k, t in enumerate(times):
-        if snapshot_idx < len(snapshot_times) and np.isclose(
-            t, snapshot_times[snapshot_idx], atol=dt
-        ):
-            snapshots[snapshot_times[snapshot_idx]] = X.copy()
-            snapshot_idx += 1
+            # Euler-Maruyama step
+            drift = np.array([grad_potential(x, t) for x in X])
 
-        # Euler-Maruyama step
-        drift = np.array([grad_potential_complex(x, t) for x in X])
+            noise = rng.normal(0.0, 1.0, size=X.shape)
 
-        noise = rng.normal(0.0, 1.0, size=X.shape)
+            X += -drift * dt + np.sqrt(2 * sigma * dt) * noise   
 
-        X += -drift * dt + np.sqrt(2 * sigma * dt) * noise      
+            t += dt   
 
     return snapshots
