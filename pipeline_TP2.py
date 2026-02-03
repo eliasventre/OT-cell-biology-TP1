@@ -103,11 +103,11 @@ def main():
     # ======================
     # 2. Define and optimize TrajLoss on sparse data
     # ======================
-    lam_reg = 0.05 
+    lam_reg = 1.0 
     lam_fit = 1.0
     eps = sigma / n_times       
     sigma_fit = .1 
-    n_epochs = 250
+    n_epochs = 300
     lr = 1e-2
 
     # ======================
@@ -126,7 +126,7 @@ def main():
         obs_list_sparse.append(torch.from_numpy(X_sparse).float())
 
         # Initialize model particles close to these resampled sparse observations
-        x0 = X_obs_sparse_resampled + (10 * sigma_fit * np.random.randn(*X_obs_sparse_resampled.shape)) * (t > 0)
+        x0 = X_obs_sparse_resampled + np.random.randn(*X_obs_sparse_resampled.shape) * (t > 0)
         x0_list.append(torch.from_numpy(x0).float())
 
 
