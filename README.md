@@ -8,8 +8,7 @@ of the course *Optimal Transport & Machine Learning* (M2 Applied Mathematics).
 Trajectory inference from single-cell data using **entropic optimal transport**.
 
 ## Contents
-- `notebooks/`: guided Jupyter notebooks for the TP
-- `data/`: simulated datasets
+- `notebooks/`: guided Jupyter notebooks for the TP1
 - `src/`: helper functions
 
 ## Requirements
