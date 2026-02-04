@@ -108,7 +108,7 @@ class FitLoss(nn.Module):
     - sigma is the standard deviation for the Gaussian kernel
     """
 
-    def __init__(self, x, x_w, y, sigma, device="cpu"):
+    def __init__(self, x, y, sigma, device="cpu"):
         """
         Initialize data fitting loss for one timepoint.
         
@@ -116,8 +116,6 @@ class FitLoss(nn.Module):
         ----------
         x : torch.Tensor, shape (n_model, dim)
             Model particle positions
-        x_w : torch.Tensor, shape (n_model,)
-            Particle weights (should sum to 1)
         y : torch.Tensor, shape (n_obs, dim)
             Observed particle positions
         sigma : float
@@ -127,7 +125,6 @@ class FitLoss(nn.Module):
         """
         super().__init__()
         self.x = x
-        self.x_w = x_w
         self.y = y
         self.sigma = sigma
         self.device = device
