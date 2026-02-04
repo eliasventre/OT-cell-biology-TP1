@@ -103,10 +103,10 @@ def main():
     # ======================
     # 2. Define and optimize TrajLoss on sparse data
     # ======================
-    lam_reg = 1.0 
+    lam_reg = 0.05 
     lam_fit = 1.0
     eps = sigma / n_times       
-    sigma_fit = .1 
+    sigma_fit = 0.2 
     n_epochs = 300
     lr = 1e-2
 
